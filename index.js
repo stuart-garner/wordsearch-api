@@ -1,10 +1,14 @@
-// Add Express
+const randomNumber = require("random-words");
 const express = require("express");
 
 const app = express();
-
+/*
 app.get("/", (req, res) => {
   res.send("Express on Vercel");
+});
+*/
+app.get("/", (req, res) => {
+  res.send(`Random ${randomNumber(5)}`);
 });
 
 app.listen(5000, () => {

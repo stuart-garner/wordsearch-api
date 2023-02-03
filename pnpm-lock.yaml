@@ -2,9 +2,11 @@ lockfileVersion: 5.4
 
 specifiers:
   express: ^4.18.2
+  random-words: ^1.2.1
 
 devDependencies:
   express: 4.18.2
+  random-words: 1.2.1
 
 packages:
 
@@ -305,6 +307,10 @@ packages:
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.4
+    dev: true
+
+  /random-words/1.2.1:
+    resolution: {integrity: sha512-LG7ejRI9bhOeJ9+Rde4nRyCgdpfmC6vDZU/KlWdvWfMhK88aEWyl6f8qkLxlgO/qvWAXanhhulzQBZT8uDApCA==}
     dev: true
 
   /range-parser/1.2.1:
