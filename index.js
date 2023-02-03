@@ -7,9 +7,9 @@ app.get("/", (req, res) => {
   res.send("Express on Vercel");
 });
 */
-app.get("/api/v1/random-number/:number", (req, res) => {
+app.get("/api/v1/random-number", (req, res) => {
   res.set("content-type", "application/json");
-  const obj = randomNumber(req.params.number);
+  const obj = randomNumber(req.query.number);
   return res.send(JSON.stringify(obj));
 });
 
