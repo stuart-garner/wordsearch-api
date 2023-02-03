@@ -8,7 +8,9 @@ app.get("/", (req, res) => {
 });
 */
 app.get("/", (req, res) => {
-  res.send(`Random ${randomNumber(5)}`);
+  res.set("content-type", "application/json");
+  const obj = randomNumber(5);
+  return res.json(JSON.stringify(obj));
 });
 
 app.listen(5000, () => {
