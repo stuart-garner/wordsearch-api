@@ -30,17 +30,13 @@ const gridToRender: Array<GridSquareType> = gridData.map(
   }
 );
 
-console.log(gridData);
-console.log(gridToRender);
-console.log(words);
-
 const app = express();
 
-app.get("/api/v1/grid", (req, res) => {
+app.get("/api/grid", (req, res) => {
   res.send(JSON.stringify(gridToRender));
 });
 
-app.get("/api/v1/results", (req, res) => {
+app.get("/api/words", (req, res) => {
   res.send(JSON.stringify(words));
 });
 
@@ -49,5 +45,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`Running on port ${port}`);
 });
-
-module.exports = app;

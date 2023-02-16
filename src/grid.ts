@@ -95,13 +95,16 @@ export const createWordData = (grid: Array<GridSquareDataType>) => {
         checkCrossingWords(grid, availableWordsAndIDs, word)
       );
 
-      selectedSpace.forEach((id, index) => {
-        grid[id].letter = word.charAt(index);
-      });
+      if (selectedSpace) {
+        selectedSpace.forEach((id, index) => {
+          grid[id].letter = word.charAt(index);
+        });
 
-      words.push({ word, selectedSpace, found: false });
+        words.push({ word, selectedSpace, found: false });
+      }
     }
   });
+
   return words;
 };
 
