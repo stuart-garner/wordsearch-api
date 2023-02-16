@@ -21,18 +21,23 @@ export type ResultType = {
 };
 
 const numberOfcolumns = 6;
-const gridData: Array<GridSquareDataType> = createGridData(numberOfcolumns);
-const words: Array<any> = createWordData(gridData);
+let gridData: Array<GridSquareDataType>;
+let words: Array<any>;
+let gridToRender: Array<GridSquareType>;
 
-const gridToRender: Array<GridSquareType> = gridData.map(
-  (item: GridSquareDataType) => {
+const initAPI = () => {
+  gridData = createGridData(numberOfcolumns);
+  words = createWordData(gridData);
+
+  gridToRender = gridData.map((item: GridSquareDataType) => {
     return { id: item.id, letter: item.letter };
-  }
-);
+  });
+};
 
 const app = express();
 
 app.get("/api/grid", (req, res) => {
+  initAPI();
   res.send(JSON.stringify(gridToRender));
 });
 
