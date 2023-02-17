@@ -21,30 +21,26 @@ export type ResultType = {
   found: boolean;
 };
 
-const numberOfcolumns = 6;
-let gridData: Array<GridSquareDataType>;
-let words: Array<any>;
-let gridToRender: Array<GridSquareType>;
+const initAPI = (numberOfcolumns: number | string = 6) => {
+  const gridData: Array<GridSquareDataType> = createGridData(
+    Number(numberOfcolumns)
+  );
+  const words: Array<any> = createWordData(gridData);
 
-const initAPI = () => {
-  gridData = createGridData(numberOfcolumns);
-  words = createWordData(gridData);
+  const gridToRender: Array<GridSquareType> = gridData.map(
+    (item: GridSquareDataType) => {
+      return { id: item.id, letter: item.letter };
+    }
+  );
 
-  gridToRender = gridData.map((item: GridSquareDataType) => {
-    return { id: item.id, letter: item.letter };
-  });
+  return { grid: gridToRender, words };
 };
 
 const app = express();
 app.use(cors());
 
-app.get("/api/grid", (req, res) => {
-  initAPI();
-  res.send(JSON.stringify(gridToRender));
-});
-
-app.get("/api/words", (req, res) => {
-  res.send(JSON.stringify(words));
+app.get("/api/grid/:size", (req, res) => {
+  res.send(JSON.stringify(initAPI(req.params.size)));
 });
 
 const port = process.env.PORT || 8080;
