@@ -44,7 +44,8 @@ const app = express();
 app.use(cors());
 
 app.get("/api/grid/:size", (req, res) => {
-  res.send(JSON.stringify(initAPI(req.params.size)));
+  const size = Number(req.params.size) > 20 ? 20 : Number(req.params.size);
+  res.send(JSON.stringify(initAPI(size)));
 });
 
 const port = process.env.PORT || 8080;
