@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { createGridData, createWordData, GridSquareDataType } from "./grid";
 
 export type SquareType = {
@@ -35,6 +36,7 @@ const initAPI = () => {
 };
 
 const app = express();
+app.use(cors());
 
 app.get("/api/grid", (req, res) => {
   initAPI();
