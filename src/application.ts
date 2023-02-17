@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { createGridData, createWordData, GridSquareDataType } from "./grid";
+import { getRandomIndex, letters } from "./utils";
 
 export type SquareType = {
   id: number;
@@ -29,7 +30,10 @@ const initAPI = (numberOfcolumns: number | string = 6) => {
 
   const gridToRender: Array<GridSquareType> = gridData.map(
     (item: GridSquareDataType) => {
-      return { id: item.id, letter: item.letter };
+      return {
+        id: item.id,
+        letter: item.letter === "" ? getRandomIndex(letters) : item.letter,
+      };
     }
   );
 
@@ -46,5 +50,5 @@ app.get("/api/grid/:size", (req, res) => {
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
-  console.log(`Running on port ${port}`);
+  //console.log(`Running on port ${port}`);
 });
