@@ -82,28 +82,37 @@ export const checkCrossingWords = (
   return filteredSpaces;
 };
 
+const getRandomWords = () => {
+  const words = randomWords({ exactly: 100 });
+  return words.filter((word) => word.length > 5);
+};
+
 export const createWordData = (grid: Array<GridSquareDataType>) => {
   const words: Array<any> = [];
-  randomWords(Math.sqrt(grid.length)).forEach((word: string) => {
-    const availableWordsAndIDs: any = getSquaresWithEnoughSpaces(
-      grid,
-      word.length
-    );
 
-    if (availableWordsAndIDs) {
-      const selectedSpace: Array<number> = getRandomIndex(
-        checkCrossingWords(grid, availableWordsAndIDs, word)
+  getRandomWords()
+    .slice(0, 40)
+    .forEach((word: string) => {
+      /////
+      const availableWordsAndIDs: any = getSquaresWithEnoughSpaces(
+        grid,
+        word.length
       );
 
-      if (selectedSpace) {
-        selectedSpace.forEach((id, index) => {
-          grid[id].letter = word.charAt(index);
-        });
+      if (availableWordsAndIDs) {
+        const selectedSpace: Array<number> = getRandomIndex(
+          checkCrossingWords(grid, availableWordsAndIDs, word)
+        );
 
-        words.push({ word, selectedSpace, found: false });
+        if (selectedSpace) {
+          selectedSpace.forEach((id, index) => {
+            grid[id].letter = word.charAt(index);
+          });
+
+          words.push({ word, selectedSpace, found: false });
+        }
       }
-    }
-  });
+    });
 
   return words;
 };
