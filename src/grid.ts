@@ -67,8 +67,11 @@ type FilterdSpaceType = {
   word: string;
   spaces: Array<number>;
   isCrossing: boolean;
+  startIndex: number;
+  endIndex: number;
   found: boolean;
 };
+
 export const checkCrossingWords = (
   grid: Array<GridSquareDataType>,
   availableSpaces: Array<any>,
@@ -93,6 +96,8 @@ export const checkCrossingWords = (
       filteredSpaces.push({
         word,
         spaces: crossingWords,
+        startIndex: crossingWords[0],
+        endIndex: crossingWords[crossingWords.length - 1],
         isCrossing,
         found: false,
       });
