@@ -70,14 +70,27 @@ export const checkCrossingWords = (
 ) => {
   const wordArray: Array<string> = word.split("");
   const filteredSpaces: Array<any> = [];
+
   availableSpaces.forEach((spaces: Array<number>) => {
-    const test: Array<number> = [];
+    const crossingWords: Array<any> = [];
+    let isCrossing = false;
     spaces.forEach((id: number, index: number) => {
-      if (grid[id].letter === "" || grid[id].letter === wordArray[index]) {
-        test.push(id);
+      if (grid[id].letter === "") {
+        crossingWords.push(id);
+      } else if (grid[id].letter === wordArray[index]) {
+        isCrossing = true;
+        crossingWords.push(id);
       }
     });
-    if (test.length === word.length) filteredSpaces.push(test);
+
+    if (crossingWords.length === word.length) {
+      filteredSpaces.push({
+        word,
+        spaces: crossingWords,
+        isCrossing,
+        found: false,
+      });
+    }
   });
   return filteredSpaces;
 };
@@ -100,7 +113,7 @@ export const createWordData = (grid: Array<GridSquareDataType>) => {
       );
 
       if (availableWordsAndIDs) {
-        const selectedSpace: Array<number> = getRandomIndex(
+        const selectedSpace: Array<number> = getRandomSelectedIndex(
           checkCrossingWords(grid, availableWordsAndIDs, word)
         );
 
@@ -115,6 +128,17 @@ export const createWordData = (grid: Array<GridSquareDataType>) => {
     });
 
   return words;
+};
+
+export const getRandomSelectedIndex = (array: Array<any>) => {
+  const crossingSpaces = array.filter((item) => item.isCrossing === true);
+  if (crossingSpaces.length > 0) {
+    array = crossingSpaces;
+  }
+  const random = Math.floor(Math.random() * array.length);
+  if (array[random]) {
+    return array[random].spaces;
+  }
 };
 
 export const randomiseGrid = (squares: Array<any>) => {
