@@ -63,13 +63,19 @@ export const getSquaresWithEnoughSpaces = (
   return result;
 };
 
+type FilterdSpaceType = {
+  word: string;
+  spaces: Array<number>;
+  isCrossing: boolean;
+  found: boolean;
+};
 export const checkCrossingWords = (
   grid: Array<GridSquareDataType>,
   availableSpaces: Array<any>,
   word: string
 ) => {
   const wordArray: Array<string> = word.split("");
-  const filteredSpaces: Array<any> = [];
+  const filteredSpaces: Array<FilterdSpaceType> = [];
 
   availableSpaces.forEach((spaces: Array<number>) => {
     const crossingWords: Array<any> = [];
@@ -113,16 +119,16 @@ export const createWordData = (grid: Array<GridSquareDataType>) => {
       );
 
       if (availableWordsAndIDs) {
-        const selectedSpace: Array<number> = getRandomSelectedIndex(
+        const selectedSpace: FilterdSpaceType = getRandomSelectedIndex(
           checkCrossingWords(grid, availableWordsAndIDs, word)
         );
 
         if (selectedSpace) {
-          selectedSpace.forEach((id, index) => {
+          selectedSpace.spaces.forEach((id, index) => {
             grid[id].letter = word.charAt(index);
           });
-
-          words.push({ word, selectedSpace, found: false });
+          console.log(selectedSpace);
+          words.push(selectedSpace);
         }
       }
     });
@@ -131,13 +137,15 @@ export const createWordData = (grid: Array<GridSquareDataType>) => {
 };
 
 export const getRandomSelectedIndex = (array: Array<any>) => {
-  const crossingSpaces = array.filter((item) => item.isCrossing === true);
+  const crossingSpaces = array.filter(
+    (item: FilterdSpaceType) => item.isCrossing === true
+  );
   if (crossingSpaces.length > 0) {
     array = crossingSpaces;
   }
   const random = Math.floor(Math.random() * array.length);
   if (array[random]) {
-    return array[random].spaces;
+    return array[random];
   }
 };
 
