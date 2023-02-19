@@ -65,8 +65,8 @@ export const getSquaresWithEnoughSpaces = (
 
 type FilterdSpaceType = {
   word: string;
-  spaces: Array<number>;
-  isCrossing: boolean;
+  spaces?: Array<number>;
+  isCrossing?: boolean;
   startIndex: number;
   endIndex: number;
   found: boolean;
@@ -129,11 +129,17 @@ export const createWordData = (grid: Array<GridSquareDataType>) => {
         );
 
         if (selectedSpace) {
-          selectedSpace.spaces.forEach((id, index) => {
+          const { word, spaces, startIndex, endIndex, found } = selectedSpace;
+          spaces?.forEach((id, index) => {
             grid[id].letter = word.charAt(index);
           });
-          console.log(selectedSpace);
-          words.push(selectedSpace);
+
+          words.push({
+            word,
+            startIndex,
+            endIndex,
+            found,
+          });
         }
       }
     });
