@@ -108,7 +108,9 @@ export const checkCrossingWords = (
 
 const getRandomWords = () => {
   const words = randomWords({ exactly: 100 });
-  return words.filter((word) => word.length > 5);
+  const uniqueArray = words.filter((item, pos) => words.indexOf(item) == pos);
+  const finalWords = uniqueArray.filter((word) => word.length > 5);
+  return finalWords;
 };
 
 export const createWordData = (grid: Array<GridSquareDataType>) => {
