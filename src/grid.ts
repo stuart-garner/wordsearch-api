@@ -83,13 +83,16 @@ export const checkCrossingWords = (
   availableSpaces.forEach((spaces: Array<number>) => {
     const crossingWords: Array<any> = [];
     let isCrossing = false;
-    spaces.forEach((id: number, index: number) => {
+    spaces.every((id: number, index: number) => {
       if (grid[id].letter === "") {
         crossingWords.push(id);
       } else if (grid[id].letter === wordArray[index]) {
         isCrossing = true;
         crossingWords.push(id);
+      } else {
+        return false;
       }
+      return true;
     });
 
     if (crossingWords.length === word.length) {
