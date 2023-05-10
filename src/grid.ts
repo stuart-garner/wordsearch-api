@@ -55,7 +55,7 @@ export const getSquaresWithEnoughSpaces = (
   const result: Array<any> = [];
   grid.forEach((square: GridSquareDataType) => {
     square.availableSquares.forEach((array: Array<number>) => {
-      if (array.length === wordLength) {
+      if (array.length >= wordLength) {
         result.push(array);
       }
     });
