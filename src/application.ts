@@ -32,7 +32,7 @@ const initAPI = (numberOfcolumns: number | string = 6) => {
     (item: GridSquareDataType) => {
       return {
         id: item.id,
-        letter: item.letter === "" ? getRandomIndex(letters) : item.letter,
+        letter: item.letter === "" ? "":"",//getRandomIndex(letters) : item.letter,
       };
     }
   );
